@@ -243,12 +243,12 @@ function TableBody({ flamebearer, sortBy, sortByDirection, viewDiff }) {
         </td>
         {/* NOTE: it seems React does not understand multiple backgrounds, have to workaround:  */}
         {/*   The `style` prop expects a mapping from style properties to values, not a string. */}
-        <td STYLE={backgroundImageDiffStyle(x.selfLeft, x.selfRght, maxSelf, color, 'L')}>
+        <td style={backgroundImageDiffStyle(x.selfLeft, x.selfRght, maxSelf, color, 'L')}>
           <span title={formatter.format(x.selfLeft, sampleRate)}>
             {formatter.format(x.selfLeft, sampleRate)}
           </span>
         </td>
-        <td STYLE={backgroundImageDiffStyle(x.selfLeft, x.selfRght, maxSelf, color, 'R')}>
+        <td style={backgroundImageDiffStyle(x.selfLeft, x.selfRght, maxSelf, color, 'R')}>
           <span title={formatter.format(x.selfRght, sampleRate)}>
             {formatter.format(x.selfRght, sampleRate)}
           </span>
@@ -260,12 +260,12 @@ function TableBody({ flamebearer, sortBy, sortByDirection, viewDiff }) {
           <span className="color-reference" style={style} />
           <span title={x.name}>{x.name}</span>
         </td>
-        <td STYLE={backgroundImageDiffStyle(x.totalLeft, x.totalRght, numTicks / 2, color, 'L')}>
+        <td style={backgroundImageDiffStyle(x.totalLeft, x.totalRght, numTicks / 2, color, 'L')}>
           <span title={formatter.format(x.totalLeft, sampleRate)}>
             {formatter.format(x.totalLeft, sampleRate)}
           </span>
         </td>
-        <td STYLE={backgroundImageDiffStyle(x.totalLeft, x.totalRght, numTicks / 2, color, 'R')}>
+        <td style={backgroundImageDiffStyle(x.totalLeft, x.totalRght, numTicks / 2, color, 'R')}>
           <span title={formatter.format(x.totalRght, sampleRate)}>
             {formatter.format(x.totalRght, sampleRate)}
           </span>
@@ -277,12 +277,12 @@ function TableBody({ flamebearer, sortBy, sortByDirection, viewDiff }) {
           <span className="color-reference" style={style} />
           <span title={x.name}>{x.name}</span>
         </td>
-        <td STYLE={backgroundImageDiffStyle(x.selfLeft, x.selfRght, maxSelf, defaultColor)}>
+        <td style={backgroundImageDiffStyle(x.selfLeft, x.selfRght, maxSelf, defaultColor)}>
           <span title={formatter.format(x.selfDiff, sampleRate)}>
             {formatter.format(x.selfDiff, sampleRate)}
           </span>
         </td>
-        <td STYLE={backgroundImageDiffStyle(x.totalLeft, x.totalRght, numTicks / 2, color)}>
+        <td style={backgroundImageDiffStyle(x.totalLeft, x.totalRght, numTicks / 2, color)}>
           <span title={formatter.format(x.totalDiff, sampleRate)}>
             {formatter.format(x.totalDiff, sampleRate)}
           </span>
