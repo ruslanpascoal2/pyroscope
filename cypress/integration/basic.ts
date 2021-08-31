@@ -22,7 +22,16 @@ describe('basic test', () => {
     waitInDevMode(100);
     cy.location('pathname').should('eq', '/');
   });
-})
+
+  it('updates flamegraph on app name change', () => {
+    cy.visit('/')
+    waitInDevMode(100);
+
+    cy.findByTestId('app-name-selector').select('pyroscope.server.cpu');
+    waitInDevMode(100);
+    cy.findByTestId('flamegraph-canvas').invoke('attr', 'data-appname').should('eq', 'pyroscope.server.cpu{}');
+  });
+});
 
 // very nasty, just to avoid dealing with the following error
 // which requires aborting fetch call and whatnot
