@@ -20,6 +20,8 @@ import {
 
 import "./styles.css";
 
+import { fitToCanvasRect } from "../../../util/fitMode";
+
 const formatSingle = {
   format: "single",
   jStep: 4,
@@ -154,9 +156,13 @@ class FlameGraph extends React.Component {
         prevProps.flamebearer !== this.props.flamebearer) ||
       this.props.width !== prevProps.width ||
       this.props.height !== prevProps.height ||
-      this.props.view !== prevProps.view
+      this.props.view !== prevProps.view ||
+      this.props.fitMode !== prevProps.fitMode
     ) {
       this.updateData();
+    }
+    if (this.props.fitMode !== prevProps.fitMode) {
+      setTimeout(() => this.renderCanvas(), 0);
     }
   }
 
@@ -272,8 +278,10 @@ class FlameGraph extends React.Component {
 
     this.ctx.textBaseline = "middle";
     this.ctx.font =
-      '400 12px system-ui, -apple-system, "Segoe UI", "Roboto", "Ubuntu", "Cantarell", "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"';
-
+      "400 11.5px SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace";
+    // Since this is a monospaced font
+    // any character would do
+    const characterSize = this.ctx.measureText("a").width;
     this.formatter = this.createFormatter();
     // i = level
     for (let i = 0; i < levels.length - this.topLevel; i += 1) {
@@ -353,14 +361,30 @@ class FlameGraph extends React.Component {
 
         if (!collapsed && sw >= LABEL_THRESHOLD) {
           const percent = formatPercent(ratio);
-          const name = `${
-            names[level[j + ff.jName]]
-          } (${percent}, ${this.formatter.format(numBarTicks, sampleRate)})`;
+          const shortName = names[level[j + ff.jName]];
+          const longName = `${shortName} (${percent}, ${this.formatter.format(
+            numBarTicks,
+            sampleRate
+          )})`;
+
+          const namePosX = Math.round(Math.max(x, 0));
+          const fitCalc = fitToCanvasRect({
+            mode: this.props.fitMode,
+            charSize: characterSize,
+            rectWidth: sw,
+            fullText: longName,
+            shortText: shortName,
+          });
 
           this.ctx.save();
           this.ctx.clip();
           this.ctx.fillStyle = "black";
-          this.ctx.fillText(name, Math.round(Math.max(x, 0) + 3), y + sh / 2);
+          // when showing the code, give it a space in the beginning
+          this.ctx.fillText(
+            fitCalc.text,
+            namePosX + fitCalc.marginLeft,
+            y + sh / 2 + 1
+          );
           this.ctx.restore();
         }
       }

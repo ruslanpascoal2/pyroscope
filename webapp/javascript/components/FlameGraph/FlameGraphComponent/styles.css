@@ -71,6 +71,7 @@
   padding: 3px 5px;
   color: #333;
   font-size: 12px;
+  opacity: 0;
 }
 
 .flamegraph-tooltip-name {

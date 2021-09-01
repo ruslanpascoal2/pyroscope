@@ -45,6 +45,7 @@ class FlameGraphRenderer extends React.Component {
       sortByDirection: "desc",
       view: "both",
       viewDiff: props.viewType === "diff" ? "diff" : undefined,
+      fitMode: props.fitMode ? props.fitMode : "HEAD",
       flamebearer: null,
     };
   }
@@ -96,6 +97,12 @@ class FlameGraphRenderer extends React.Component {
       }
     }
   }
+
+  updateFitMode = (newFitMode) => {
+    this.setState({
+      fitMode: newFitMode,
+    });
+  };
 
   updateResetStyle = () => {
     // const emptyQuery = this.query === "";
@@ -202,6 +209,7 @@ class FlameGraphRenderer extends React.Component {
           updateSortBy={this.updateSortBy}
           view={this.state.view}
           viewDiff={this.state.viewDiff}
+          fitMode={this.state.fitMode}
         />
       </div>
     );
@@ -215,6 +223,8 @@ class FlameGraphRenderer extends React.Component {
           view={this.state.view}
           ExportData={ExportData}
           label={this.props.query}
+          fitMode={this.state.fitMode}
+          viewType={this.props.viewType}
         />
       ) : null;
 
@@ -242,6 +252,8 @@ class FlameGraphRenderer extends React.Component {
             updateView={this.updateView}
             updateViewDiff={this.updateViewDiff}
             resetStyle={this.state.resetStyle}
+            updateFitMode={this.updateFitMode}
+            fitMode={this.state.fitMode}
           />
           {this.props.viewType === "double" ? (
             <>
