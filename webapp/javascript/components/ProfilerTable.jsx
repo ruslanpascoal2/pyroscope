@@ -271,7 +271,10 @@ const TableBody = React.memo(
 
     const renderRow = !viewDiff ? (
       (x, color, style) => (
-        <tr key={x.name + renderID}>
+        <tr
+          key={x.name + renderID}
+          className={!!isRowSelected(x.name) && styles.selectedTr}
+        >
           {nameCell(x, style)}
           <td style={backgroundImageStyle(x.self, maxSelf, color)}>
             {/* <span>{ formatPercent(x.self / numTicks) }</span>
